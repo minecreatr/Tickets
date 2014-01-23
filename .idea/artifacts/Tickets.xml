@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Tickets">
+    <output-path>$USER_HOME$/Desktop/Minecraft_Server/plugins</output-path>
+    <root id="archive" name="Tickets.jar">
+      <element id="module-output" name="Tickets" />
+      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+    </root>
+  </artifact>
+</component>

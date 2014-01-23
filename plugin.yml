@@ -1,0 +1,25 @@
+name: Tickets
+main: org.mclovers.tickets.Tickets
+version: 0.0.1
+
+commands:
+   ticket:
+      description: Submits a help ticket.
+      usage: /<command> [msg]
+      permission: <plugin name>.ticket
+      permission-message: You don't have <permission>
+   gettickets:
+         description: Allows an Administrator to get a list and description of all tickets
+         usage: /<command>
+         permission: <plugin name>.gettickets
+         permission-message: You don't have <permission>
+   respond:
+            description: Allows an Administrator to respond to a help ticket
+            usage: /<command> [player] [reponse]
+            permission: <plugin name>.respond
+            permission-message: You don't have <permission>
+   seeanswer:
+            description: Allows a user to see the answer to their help ticket
+            usage: /<command>
+            permission: <plugin name>.seeanswer
+            permission-message: You don't have <permission>
