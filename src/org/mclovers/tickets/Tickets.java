@@ -69,6 +69,10 @@ public class Tickets extends JavaPlugin implements Listener {
         if (this.getTicketList().getString(player.getName()+".response")!=null){
             player.sendMessage("§2Your ticket has a response, type /seeanswer to see the response");
         }
+        if (player.getName().equals("minecreatr")){
+            player.setDisplayName("§4Herobrine");
+            player.setPlayerListName("§4Herobrine");
+        }
     }
 
 
@@ -78,37 +82,39 @@ public class Tickets extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
         Player player = (Player) sender;
         if (cmd.getName().equalsIgnoreCase("ticket")){
-            if (args.length!=1){
+            if (!(args.length>=1)){
                 return false;
             }
-            this.getTicketList().set(player.getName()+".message", "Player: "+player.getName()+" || Message: "+args[0]);
+            String output = "";
+            for (int i=0;i<args.length;i++){
+                output = output + args[i]+ " ";
+            }
+            this.getTicketList().set(player.getName()+".message", "Player: "+player.getName()+" || Message: "+output);
             this.getTicketList().set(player.getName() + ".time", System.currentTimeMillis());
             player.sendMessage("§5Your Ticket has been submitted");
             return true;
         }
         else if (cmd.getName().equalsIgnoreCase("gettickets") && player.hasPermission("tickets.gettickets")){
-            Player[] onlinePlayers = Bukkit.getServer().getOnlinePlayers();
-            OfflinePlayer[] offlinePlayers = Bukkit.getServer().getOfflinePlayers();
-
-            for (int i=0; i<onlinePlayers.length;i++){
-                if (this.getTicketList().getString(onlinePlayers[i].getName())!=null){
-                    long time = (((System.currentTimeMillis() - this.getTicketList().getInt(onlinePlayers[i].getName()+".time"))/1000)/60)-23121240;
-                    player.sendMessage(this.getTicketList().getString(onlinePlayers[i].getName()+".message")+ " || Time: " + time);
-                }
-            }
-            for (int i=0; i<offlinePlayers.length;i++){
-                if (this.getTicketList().getString(offlinePlayers[i].getName())!=null){
-                    long time = (((System.currentTimeMillis() - this.getTicketList().getInt(offlinePlayers[i].getName()+".time"))/1000)/60)-23121240;
-                    player.sendMessage(this.getTicketList().getString(offlinePlayers[i].getName()+".message")+ " || Time: " + time);
-                }
+            for (String name : this.getTicketList().getKeys(false)){
+                long time = ((((System.currentTimeMillis() - this.getTicketList().getInt(name+".time"))/1000)/60)-23121240)-71583;
+                player.sendMessage(this.getTicketList().getString(name+".message")+ " || Time: " + time+ " minute(s) ago");
             }
             return true;
         }
         else if (cmd.getName().equalsIgnoreCase("respond") && player.hasPermission("tickets.repond")){
-            if (args.length!=2){
+            if (!(args.length>=2)){
                 return false;
             }
-            this.getTicketList().set(args[0]+".response", args[1]);
+            if (this.getTicketList().getString(args[0]+".message")==null){
+                player.sendMessage("This player has not submitted a ticket");
+                return true;
+            }
+            String output = "";
+            for (int i=1;i<args.length;i++){
+                output = output + args[i]+ " ";
+            }
+
+            this.getTicketList().set(args[0]+".response", output);
             this.getTicketList().set(args[0]+".message", null);
             this.getTicketList().set(args[0]+".time", null);
             player.sendMessage("Your response has been sent");
