@@ -69,10 +69,6 @@ public class Tickets extends JavaPlugin implements Listener {
         if (this.getTicketList().getString(player.getName()+".response")!=null){
             player.sendMessage("§2Your ticket has a response, type /seeanswer to see the response");
         }
-        if (player.getName().equals("minecreatr")){
-            player.setDisplayName("§4Herobrine");
-            player.setPlayerListName("§4Herobrine");
-        }
     }
 
 
